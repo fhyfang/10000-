@@ -3,25 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2052.11.29 倒计时</title>
+    <title>10000天之约</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(45deg, 
-                #ff0000 0%, 
-                #ff8000 14.28%, 
-                #ffff00 28.56%, 
-                #80ff00 42.84%, 
-                #00ffff 57.12%, 
-                #0080ff 71.4%, 
-                #8000ff 85.68%, 
-                #ff0080 100%);
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ffff, #0080ff, #8000ff, #ff0080);
             background-size: 400% 400%;
             animation: rainbowShift 8s ease infinite;
             min-height: 100vh;
@@ -30,13 +17,11 @@
             justify-content: center;
             color: white;
         }
-        
         @keyframes rainbowShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
         .countdown-container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -48,177 +33,41 @@
             max-width: 600px;
             width: 90%;
         }
-        
         .age-info {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 20px; margin-bottom: 25px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px;
         }
-        
-        .age-row, .days-lived {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .age-label, .days-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-        
-        .age-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            color: #ffd93d;
-        }
-        
-        .days-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            color: #ff6b6b;
-        }
-        
-        .age-unit, .days-unit {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-        
-        .countdown-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
+        .age-row, .days-lived { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .age-label, .days-label { font-size: 1.1rem; opacity: 0.9; font-weight: 500; }
+        .age-number { font-size: 2.2rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); color: #ffd93d; }
+        .days-number { font-size: 1.8rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); color: #ff6b6b; }
+        .age-unit, .days-unit { font-size: 1.1rem; opacity: 0.9; font-weight: 500; }
+        .title { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 30px; }
+        .countdown-grid { display: flex; justify-content: center; gap: 20px; margin: 30px 0; flex-wrap: wrap; }
         .time-unit {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 20px 15px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 100px;
-            flex: 0 0 auto;
+            background: rgba(255, 255, 255, 0.2); border-radius: 15px; padding: 20px 15px;
+            backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 100px; flex: 0 0 auto;
         }
-        
-        .time-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            display: block;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .time-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
+        .time-number { font-size: 2.5rem; font-weight: 800; display: block; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+        .time-label { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
         .target-date {
-            margin-top: 30px;
-            font-size: 1rem;
-            opacity: 0.8;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px; font-size: 1rem; opacity: 0.8; background: rgba(255, 255, 255, 0.1);
+            padding: 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-        
+        .progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 4px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #ffd93d); border-radius: 4px; transition: width 0.5s ease-out; }
         @media (max-width: 480px) {
-            .title {
-                font-size: 2rem;
-            }
-            
-            .countdown-container {
-                padding: 25px 15px;
-            }
-            
-            .time-number {
-                font-size: 1.8rem;
-            }
-            
-            .countdown-grid {
-                gap: 10px;
-            }
-            
-            .time-unit {
-                min-width: 70px;
-                padding: 15px 10px;
-            }
-            
-            .age-info {
-                padding: 15px;
-                margin-bottom: 20px;
-                gap: 12px;
-            }
-            
-            .age-row, .days-lived {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .age-number {
-                font-size: 1.8rem;
-            }
-            
-            .days-number {
-                font-size: 1.5rem;
-            }
-            
-            .age-label, .age-unit, .days-label, .days-unit {
-                font-size: 1rem;
-            }
+            .title { font-size: 2rem; }
+            .countdown-container { padding: 25px 15px; }
+            .time-number { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="countdown-container">
-        <!-- 这个部分保持不变，因为它是一个独立的个人信息展示 -->
         <div class="age-info">
             <div class="age-row">
                 <span class="age-label">我的年龄</span>
@@ -232,8 +81,8 @@
             </div>
         </div>
         
-        <h1 class="title" id="mainTitle">倒计时</h1>
-        <p class="subtitle" id="mainSubtitle"></p>
+        <h1 class="title" id="mainTitle"></h1>
+        <p class="subtitle" id="mainSubtitle">未来已来，只是不均匀发生</p>
         
         <div class="countdown-grid">
             <div class="time-unit">
@@ -264,115 +113,81 @@
     </div>
 
     <script>
-        // --- 配置区域 ---
-        
-        // 个人生日，用于计算年龄和已生存天数 (此功能保持不变)
-        const birthDate = new Date(1987, 7, 25); // 月份从0开始，所以8月是7
-        
-        // **核心修改：设置固定的起点和终点**
+        const birthDate = new Date(1987, 7, 25);
+        const COUNTDOWN_DAYS = 10000;
         const COUNTDOWN_START_DATE = new Date('2025-07-14T00:00:00');
-        const COUNTDOWN_END_DATE = new Date('2052-11-29T23:59:59');
+        const COUNTDOWN_END_DATE = new Date(COUNTDOWN_START_DATE.getTime() + (COUNTDOWN_DAYS * 24 * 60 * 60 * 1000));
 
-        // --- 功能函数 ---
-
-        // 计算并显示当前年龄和已生存天数 (此函数不变)
         function updateAge() {
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            
-            const timeDiff = today.getTime() - birthDate.getTime();
-            const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+            const daysLived = Math.floor((today.getTime() - birthDate.getTime()) / (1000 * 60 * 60 * 24));
             document.getElementById('currentAge').textContent = age;
             document.getElementById('daysLived').textContent = daysLived.toLocaleString();
         }
 
-        // 主倒计时与进度条更新函数
         function updateCountdown() {
             const now = new Date();
             const difference = COUNTDOWN_END_DATE.getTime() - now.getTime();
             
             if (now < COUNTDOWN_START_DATE) {
-                 // --- 情况1: 倒计时还未开始 ---
                 const timeToStart = COUNTDOWN_START_DATE.getTime() - now.getTime();
-                const days = Math.floor(timeToStart / (1000 * 60 * 60 * 24));
-                document.querySelector('.title').textContent = `距开始还有 ${days} 天`;
-                document.querySelector('.subtitle').textContent = `倒计时将于 ${COUNTDOWN_START_DATE.toLocaleDateString('zh-CN')} 开始`;
-
+                const daysToStart = Math.ceil(timeToStart / (1000 * 60 * 60 * 24));
+                document.getElementById('mainTitle').textContent = `距约定开始还有 ${daysToStart} 天`;
                 document.getElementById('days').textContent = '----';
                 document.getElementById('hours').textContent = '--';
                 document.getElementById('minutes').textContent = '--';
                 document.getElementById('seconds').textContent = '--';
                 document.getElementById('progressFill').style.width = '0%';
-
             } else if (difference > 0) {
-                // --- 情况2: 倒计时正在进行中 ---
-                // 计算剩余时间
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                // --- 核心修改点 ---
+                // 使用 Math.ceil 计算剩余的“日历天”
+                const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
                 
-                // 更新倒计时显示
-                document.getElementById('days').textContent = days.toString().padStart(4, '0');
+                // 注意：这里我们不再显示天数，因为天数已经由 Math.ceil 决定了
+                // 我们把最大的单位改成 “已过天数/总天数” 的形式，或者直接显示倒计时
+                // 这里我们保持原样，但需要注意 days 的计算逻辑变了
+                
+                // 显示时，我们用 floor 来显示还剩多少个“整天”
+                const displayDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+                document.getElementById('days').textContent = displayDays.toString().padStart(4, '0');
                 document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
                 document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
                 document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
                 
-                // 计算并更新进度条
                 const totalDuration = COUNTDOWN_END_DATE.getTime() - COUNTDOWN_START_DATE.getTime();
                 const elapsedTime = now.getTime() - COUNTDOWN_START_DATE.getTime();
                 const progressPercent = (elapsedTime / totalDuration) * 100;
                 document.getElementById('progressFill').style.width = Math.min(100, progressPercent) + '%';
-            
             } else {
-                // --- 情况3: 倒计时已结束 ---
+                // 倒计时结束
                 document.getElementById('days').textContent = '0000';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
                 document.getElementById('seconds').textContent = '00';
                 document.getElementById('progressFill').style.width = '100%';
-                
-                document.getElementById('mainTitle').textContent = '🎉 旅程抵达终点!';
-                document.getElementById('mainSubtitle').textContent = '恭喜你见证了从 2025 到 2052 的这段时光!';
+                document.getElementById('mainTitle').textContent = '🎉 约定达成!';
+                document.getElementById('mainSubtitle').textContent = '恭喜你完成了10000天的旅程!';
             }
         }
         
-        // --- 页面初始化 ---
         function initializePage() {
-            // 计算总天数并设置标题
-            const totalDurationMs = COUNTDOWN_END_DATE.getTime() - COUNTDOWN_START_DATE.getTime();
-            const totalDays = Math.ceil(totalDurationMs / (1000 * 60 * 60 * 24)); 
-            document.getElementById('mainTitle').textContent = `一个 ${totalDays} 天的约定`;
-            
-            //  --- 主要修改点 ---
-            // 将副标题设置为指定的文本
-            document.getElementById('mainSubtitle').textContent = '未来已来，只是不均匀发生';
-            
-            // 显示格式化的目标日期
+            document.getElementById('mainTitle').textContent = `一个 ${COUNTDOWN_DAYS} 天的约定`;
             document.getElementById('targetDate').textContent = COUNTDOWN_END_DATE.toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
+                year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
             });
-
-            // 首次运行更新函数
             updateAge();
             updateCountdown();
         }
         
-        // 启动页面
         initializePage();
-        
-        // 设置定时器，每秒更新倒计时，每天更新年龄
         setInterval(updateCountdown, 1000);
-        setInterval(updateAge, 24 * 60 * 60 * 1000);
     </script>
 </body>
 </html>
