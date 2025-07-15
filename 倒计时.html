@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10000天倒计时</title>
+    <title>2052.11.29 倒计时</title>
     <style>
         * {
             margin: 0;
@@ -218,6 +218,7 @@
 </head>
 <body>
     <div class="countdown-container">
+        <!-- 这个部分保持不变，因为它是一个独立的个人信息展示 -->
         <div class="age-info">
             <div class="age-row">
                 <span class="age-label">我的年龄</span>
@@ -231,8 +232,8 @@
             </div>
         </div>
         
-        <h1 class="title">未来的10000天</h1>
-        <p class="subtitle">人生的10000天</p>
+        <h1 class="title" id="mainTitle">倒计时</h1>
+        <p class="subtitle" id="mainSubtitle"></p>
         
         <div class="countdown-grid">
             <div class="time-unit">
@@ -263,10 +264,18 @@
     </div>
 
     <script>
-        // 生日设置
+        // --- 配置区域 ---
+        
+        // 个人生日，用于计算年龄和已生存天数 (此功能保持不变)
         const birthDate = new Date(1987, 7, 25); // 月份从0开始，所以8月是7
         
-        // 计算并显示当前年龄和已生存天数
+        // **核心修改：设置固定的起点和终点**
+        const COUNTDOWN_START_DATE = new Date('2025-07-14T00:00:00');
+        const COUNTDOWN_END_DATE = new Date('2052-11-29T23:59:59');
+
+        // --- 功能函数 ---
+
+        // 计算并显示当前年龄和已生存天数 (此函数不变)
         function updateAge() {
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
@@ -276,69 +285,93 @@
                 age--;
             }
             
-            // 计算已生存天数
             const timeDiff = today.getTime() - birthDate.getTime();
             const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             
             document.getElementById('currentAge').textContent = age;
             document.getElementById('daysLived').textContent = daysLived.toLocaleString();
         }
-        
-        // 计算目标日期（从今天开始的10000天后）
-        const startDate = new Date();
-        const targetDate = new Date(startDate.getTime() + (10000 * 24 * 60 * 60 * 1000));
-        
-        // 显示目标日期
-        document.getElementById('targetDate').textContent = targetDate.toLocaleDateString('zh-CN', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            weekday: 'long'
-        });
-        
+
+        // 主倒计时与进度条更新函数
         function updateCountdown() {
-            const now = new Date().getTime();
-            const target = targetDate.getTime();
-            const difference = target - now;
+            const now = new Date();
+            const difference = COUNTDOWN_END_DATE.getTime() - now.getTime();
             
-            if (difference > 0) {
+            if (now < COUNTDOWN_START_DATE) {
+                 // --- 情况1: 倒计时还未开始 ---
+                const timeToStart = COUNTDOWN_START_DATE.getTime() - now.getTime();
+                const days = Math.floor(timeToStart / (1000 * 60 * 60 * 24));
+                document.querySelector('.title').textContent = `距开始还有 ${days} 天`;
+                document.querySelector('.subtitle').textContent = `倒计时将于 ${COUNTDOWN_START_DATE.toLocaleDateString('zh-CN')} 开始`;
+
+                document.getElementById('days').textContent = '----';
+                document.getElementById('hours').textContent = '--';
+                document.getElementById('minutes').textContent = '--';
+                document.getElementById('seconds').textContent = '--';
+                document.getElementById('progressFill').style.width = '0%';
+
+            } else if (difference > 0) {
+                // --- 情况2: 倒计时正在进行中 ---
                 // 计算剩余时间
                 const days = Math.floor(difference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
                 
-                // 更新显示
+                // 更新倒计时显示
                 document.getElementById('days').textContent = days.toString().padStart(4, '0');
                 document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
                 document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
                 document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
                 
-                // 计算进度百分比
-                const totalTime = 10000 * 24 * 60 * 60 * 1000; // 10000天的总毫秒数
-                const elapsed = totalTime - difference;
-                const progressPercent = (elapsed / totalTime) * 100;
-                document.getElementById('progressFill').style.width = progressPercent + '%';
+                // 计算并更新进度条
+                const totalDuration = COUNTDOWN_END_DATE.getTime() - COUNTDOWN_START_DATE.getTime();
+                const elapsedTime = now.getTime() - COUNTDOWN_START_DATE.getTime();
+                const progressPercent = (elapsedTime / totalDuration) * 100;
+                document.getElementById('progressFill').style.width = Math.min(100, progressPercent) + '%';
+            
             } else {
-                // 倒计时结束
+                // --- 情况3: 倒计时已结束 ---
                 document.getElementById('days').textContent = '0000';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
                 document.getElementById('seconds').textContent = '00';
                 document.getElementById('progressFill').style.width = '100%';
                 
-                document.querySelector('.title').textContent = '🎉 挑战完成!';
-                document.querySelector('.subtitle').textContent = '恭喜你完成了10000天的旅程!';
+                document.getElementById('mainTitle').textContent = '🎉 旅程抵达终点!';
+                document.getElementById('mainSubtitle').textContent = '恭喜你见证了从 2025 到 2052 的这段时光!';
             }
         }
         
-        // 初始化
-        updateAge();
-        updateCountdown();
+        // --- 页面初始化 ---
+        function initializePage() {
+            // 计算总天数并设置标题
+            const totalDurationMs = COUNTDOWN_END_DATE.getTime() - COUNTDOWN_START_DATE.getTime();
+            const totalDays = Math.ceil(totalDurationMs / (1000 * 60 * 60 * 24)); 
+            document.getElementById('mainTitle').textContent = `一个 ${totalDays} 天的约定`;
+            
+            //  --- 主要修改点 ---
+            // 将副标题设置为指定的文本
+            document.getElementById('mainSubtitle').textContent = '未来已来，只是不均匀发生';
+            
+            // 显示格式化的目标日期
+            document.getElementById('targetDate').textContent = COUNTDOWN_END_DATE.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+
+            // 首次运行更新函数
+            updateAge();
+            updateCountdown();
+        }
         
-        // 每秒更新一次
+        // 启动页面
+        initializePage();
+        
+        // 设置定时器，每秒更新倒计时，每天更新年龄
         setInterval(updateCountdown, 1000);
-        // 每天更新一次年龄（虽然年龄变化很慢，但保险起见）
         setInterval(updateAge, 24 * 60 * 60 * 1000);
     </script>
 </body>
